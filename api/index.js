@@ -65,8 +65,8 @@ async function connectToDatabase() {
   if (MONGODB_URI && !isPlaceholder) {
     try {
       await mongoose.connect(MONGODB_URI, {
-        serverSelectionTimeoutMS: 10000,
-        connectTimeoutMS: 10000,
+        serverSelectionTimeoutMS: 3000,
+        connectTimeoutMS: 3000,
       });
       console.log('✅ Connected to MongoDB Atlas');
       
@@ -88,6 +88,24 @@ async function connectToDatabase() {
   }
   
   return null;
+}
+
+let dbConnectPromise = null;
+
+function ensureDatabaseConnection() {
+  if (cachedDb && mongoose.connection.readyState === 1) return;
+  if (dbConnectPromise) return;
+
+  // Fire once per cold start; do not block request handling on DB handshake.
+  dbConnectPromise = connectToDatabase()
+    .catch((error) => {
+      console.warn('⚠️ Background MongoDB init failed:', error?.message || error);
+    })
+    .finally(() => {
+      if (mongoose.connection.readyState !== 1) {
+        dbConnectPromise = null;
+      }
+    });
 }
 
 // Routes
@@ -136,9 +154,9 @@ app.use(apiErrorHandler);
 
 // Export the Express app as a serverless function
 export default async function handler(req, res) {
-  // Connect to database before handling request
-  await connectToDatabase();
-  
+  // Start DB connection in background to avoid serverless timeouts on non-DB routes.
+  ensureDatabaseConnection();
+
   // Handle the request with Express
   return app(req, res);
 }
