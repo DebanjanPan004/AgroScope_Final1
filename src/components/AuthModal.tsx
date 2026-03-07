@@ -39,7 +39,7 @@ export const AuthModal = ({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
     setLoading(true);
 
     try {
-      const response = await fetch("/login", {
+      const response = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: loginEmail, password: loginPassword }),
@@ -79,7 +79,7 @@ export const AuthModal = ({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
     setLoading(true);
 
     try {
-      const response = await fetch("/register", {
+      const response = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -123,7 +123,7 @@ export const AuthModal = ({ open, onOpenChange, onAuthSuccess }: AuthModalProps)
     setLoading(true);
 
     try {
-      const response = await fetch("/register", {
+      const response = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
