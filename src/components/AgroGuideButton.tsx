@@ -44,7 +44,7 @@ export default function AgroGuideButton() {
         <button
           type="button"
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-[9999] flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold shadow-lg transition-all hover:scale-105 active:scale-95"
+          className="fixed bottom-20 right-6 z-[9999] flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold shadow-lg transition-all hover:scale-105 active:scale-95"
           style={{
             background: "linear-gradient(135deg, #166534, #15803d)",
             color: "#fff",
@@ -65,7 +65,7 @@ export default function AgroGuideButton() {
         <button
           type="button"
           onClick={handleClose}
-          className="fixed bottom-6 right-6 z-[9999] flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-[var(--void)] text-[var(--text-muted)] shadow-lg transition-colors hover:bg-white/10 hover:text-[var(--text-primary)]"
+          className="fixed bottom-20 right-6 z-[9999] flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-[var(--void)] text-[var(--text-muted)] shadow-lg transition-colors hover:bg-white/10 hover:text-[var(--text-primary)]"
           aria-label="Close Help"
         >
           <X className="h-5 w-5" />
