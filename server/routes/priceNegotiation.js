@@ -111,7 +111,7 @@ router.get('/agro-guide-status', (_req, res) => {
   res.json({
     ok: true,
     configured,
-    message: configured ? 'AgroGuide is ready' : 'Add DEEPSEEK_API_KEY to server/.env and restart the server',
+    message: configured ? 'AgroGuide is ready' : 'Add DEEPSEEK_API_KEY environment variable (get yours at platform.deepseek.com)',
   });
 });
 
@@ -159,8 +159,8 @@ router.post('/chat', async (req, res) => {
     try {
       const deepseekKey = process.env.DEEPSEEK_API_KEY ? String(process.env.DEEPSEEK_API_KEY).trim() : '';
       if (!deepseekKey || deepseekKey.length < 10) {
-        const msg = "AgroGuide is not configured. Add DEEPSEEK_API_KEY to server/.env and restart the server.";
-        console.warn('AgroGuide: DEEPSEEK_API_KEY missing or too short in server/.env');
+        const msg = "AgroGuide is not configured. Add DEEPSEEK_API_KEY environment variable.";
+        console.warn('AgroGuide: DEEPSEEK_API_KEY missing or invalid');
         return res.status(502).json({ error: 'AI service not configured', reply: msg });
       }
       const lang = selectedLanguage && selectedLanguage.code
